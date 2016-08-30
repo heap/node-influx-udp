@@ -82,6 +82,7 @@ test('writePoints method behaves like in node-influx', function(done) {
 
     // example from https://github.com/node-influx/node-influx#writepoints
     var points = [
+      [{val: 987}, { tag: 'foobar'}],
       [{value: 232}, { tag: 'foobar'}],
       [{value: 212}, { someothertag: 'baz'}],
       [123, { foobar: 'baz'}],
@@ -92,6 +93,7 @@ test('writePoints method behaves like in node-influx', function(done) {
 
     assert.ok(
         scope.buffer.toString().match(new RegExp(
+            "seriesname,tag=foobar val=987 [0-9]+\n" +
             "seriesname,tag=foobar value=232 [0-9]+\n" +
             "seriesname,someothertag=baz value=212 [0-9]+\n" +
             "seriesname,foobar=baz value=123 [0-9]+\n" +
